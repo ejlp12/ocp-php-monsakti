@@ -19,20 +19,17 @@ ARG uid=1000
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
 	&& rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
-#RUN echo -e "[epel]\nname=epel\nenabled=1\nbaseurl=https://dl.fedoraproject.org/pub/epel/7/x86_64/\ngpgcheck=0" > /etc/yum.repos.d/epel.repo  
+RUN echo -e "[epel]\nname=epel\nenabled=1\nbaseurl=https://dl.fedoraproject.org/pub/epel/7/x86_64/\ngpgcheck=0" > /etc/yum.repos.d/epel.repo
 
 # -----------------------------------------------------------------------------
 # Apache + PHP
 # -----------------------------------------------------------------------------
-RUN \
-    yum repolist > /dev/null && \
-    yum install -y yum-utils epel-release && \
+RUN yum repolist > /dev/null && \
+    yum install -y yum-utils && \
     yum-config-manager --disable \* &> /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
-    yum-config-manager --enable epel && \
-    yum-config-manager --enable webtatic && \
     INSTALL_PKGS="gcc gcc-c++ httpd mod_ssl php56w php56w-cli php56w-devel php56w-mysql \
     php56w-pdo php56w-mbstring php56w-soap php56w-gd php56w-xml php56w-pecl-apcu unzip libaio" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
