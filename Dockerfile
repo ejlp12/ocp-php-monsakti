@@ -216,7 +216,7 @@ EXPOSE 80 443
 #ADD index.php /var/www/app/public_html/index.php
 
 RUN yum -y install git
-RUN git clone https://github.com/ejlp12/monsakti-dev.git /var/www/app/public_html
+RUN git clone --shallow-submodules https://github.com/ejlp12/monsakti-dev.git /var/www/app/public_html
 RUN yum -y remove git && \
     yum clean all
 
