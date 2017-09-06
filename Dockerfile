@@ -218,7 +218,8 @@ EXPOSE 80 443
 RUN yum -y install git
 RUN git clone https://github.com/ejlp12/monsakti-dev.git /var/www/app/public_html
 RUN yum -y remove git && \
-    yum clean all
+    yum clean all && \
+    rm -rf /var/cache/yum
 
 CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
 
